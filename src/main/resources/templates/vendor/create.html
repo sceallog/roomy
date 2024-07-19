@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{ head :: common_header(~{::title})}">
+    <title>Create Vendor</title>
+</head>
+<body>
+<div class="container">
+    <h1>Create New Vendor</h1>
+    <form th:action="@{/vendors}" th:object="${vendor}" method="post">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" th:field="*{name}">
+        </div>
+        <div class="form-group">
+            <label for="zipCode">Zip Code</label>
+            <input type="text" class="form-control" id="zipCode" th:field="*{zipCode}">
+        </div>
+        <div class="form-group">
+            <label for="prefecture">Prefecture</label>
+            <input type="text" class="form-control" id="prefecture" th:field="*{prefecture}">
+        </div>
+        <div class="form-group">
+            <label for="city">City</label>
+            <input type="text" class="form-control" id="city" th:field="*{city}">
+        </div>
+        <div class="form-group">
+            <label for="address">Address</label>
+            <input type="text" class="form-control" id="address" th:field="*{address}">
+        </div>
+        <div class="form-group">
+            <label for="telephoneNo">Telephone No</label>
+            <input type="text" class="form-control" id="telephoneNo" th:field="*{telephoneNo}">
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" th:field="*{email}">
+        </div>
+        <div class="form-group">
+            <label for="representative">Representative</label>
+            <input type="text" class="form-control" id="representative" th:field="*{representative}">
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</div>
+</body>
+</html>

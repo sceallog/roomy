@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "ROOMS")
+@Table(name = "Rooms")
 public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,10 +16,10 @@ public class Room {
     private String cleaningStatus;
 
     @ManyToOne
-    @JoinColumn(name = "CLEANER_ID")
+    @JoinColumn(name = "cleaner_id", referencedColumnName = "id")
     private User cleaner;
 
     @ManyToOne
-    @JoinColumn(name = "CHECKER_ID")
+    @JoinColumn(name = "checker_id", referencedColumnName = "id")
     private User checker;
 }

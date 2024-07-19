@@ -7,18 +7,18 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table(name = "CLEANING_RECORDS")
+@Table(name = "Cleaning_Records")
 public class CleaningRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer Id;
 
     @ManyToOne
-    @JoinColumn(name = "ROOM_ID")
+    @JoinColumn(name = "room_id")
     private Room room;
 
     @ManyToOne
-    @JoinColumn(name = "CHECKER_ID")
+    @JoinColumn(name = "checker_id")
     private User checker;
 
     private String status;

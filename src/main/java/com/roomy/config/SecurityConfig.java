@@ -32,7 +32,8 @@ public class SecurityConfig {
                                 antMatcher("/now"),
                                 antMatcher("/users"),
                                 antMatcher("/home"),
-                                antMatcher("/")
+                                antMatcher("/**"),
+                                antMatcher("/inventory/**")
                         ).permitAll().anyRequest().authenticated()
                 ).formLogin(form ->
                         form.loginPage("/login").permitAll()

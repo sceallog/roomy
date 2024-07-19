@@ -4,16 +4,18 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
-@Data public class InventoryItem {
+@Data
+@Table(name = "Inventory_Items")
+public class InventoryItem {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(length = 50)
     private String name;
 
     private int price;
-    private int quantity;
+    private int stock;
 
     @ManyToOne
     @JoinColumn(name = "vendor_id", referencedColumnName = "id")

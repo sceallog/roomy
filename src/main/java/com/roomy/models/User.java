@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "USERS")
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,5 +15,8 @@ public class User {
     private String last_name;
     private String email;
     private String password;
-    private Integer role;
+
+    @ManyToOne
+    @JoinColumn(name = "role", referencedColumnName = "id")
+    private Role role;
 }

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{ head :: common_header(~{::title})}">
+    <title>仕入れ先一覧</title>
+</head>
+<body>
+<nav th:replace="navbar"></nav>
+<div class="container">
+    <h1>仕入れ先一覧</h1>
+    <a href="vendors/new" class="btn btn-primary">仕入れ先登録</a>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>id</th>
+            <th>社名</th>
+            <th>担当者</th>
+            <th>メール</th>
+            <th>電話番号</th>
+            <th>郵便番号</th>
+            <th>都道府県</th>
+            <th>市町村</th>
+            <th>住所</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${vendors != null}" th:each="v:${vendors}">
+            <td th:text="${v.id}"></td>
+            <td th:text="${v.name}"></td>
+            <td th:text="${v.representative}"></td>
+            <td th:text="${v.email}"></td>
+            <td th:text="${v.telephoneNo}"></td>
+            <td th:text="${v.zipCode}"></td>
+            <td th:text="${v.prefecture}"></td>
+            <td th:text="${v.city}"></td>
+            <td th:text="${v.address}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

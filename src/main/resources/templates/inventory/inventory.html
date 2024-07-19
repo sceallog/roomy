@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{ head :: common_header(~{::title})}">
+    <title>在庫管理</title>
+</head>
+<body>
+<nav th:replace="~{navbar}"></nav>
+<div class="container">
+    <h1>在庫管理</h1>
+    <a href="inventory/new" class="btn btn-primary">新規登録</a>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>品名</th>
+            <th>購入価格</th>
+            <th>在庫</th>
+            <th>販売者</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${items}">
+            <td th:text="${item.id}"></td>
+            <td th:text="${item.name}"></td>
+            <td th:text="${item.price}"></td>
+            <td th:text="${item.stock}"></td>
+            <a><td th:text="${item.vendor.name}"></td></a>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
