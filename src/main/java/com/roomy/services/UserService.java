@@ -1,6 +1,6 @@
 package com.roomy.services;
 
-import com.roomy.models.User;
+import com.roomy.models.UserEntity;
 import com.roomy.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ public class UserService {
         this.userRepo = userRepo;
     }
 
-    public List<User> getAllUsers() {
+    public List<UserEntity> getAllUsers() {
         return userRepo.findAll();
     }
 }

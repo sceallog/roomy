@@ -17,9 +17,9 @@ public class Room {
 
     @ManyToOne
     @JoinColumn(name = "cleaner_id", referencedColumnName = "id")
-    private User cleaner;
+    private UserEntity cleaner;
 
     @ManyToOne
     @JoinColumn(name = "checker_id", referencedColumnName = "id")
-    private User checker;
+    private UserEntity checker;
 }

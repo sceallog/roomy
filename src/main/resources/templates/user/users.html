@@ -10,7 +10,7 @@
     <table class="table table-striped">
         <thead>
         <tr>
-            <th>id</th>
+            <th>ユーザー名</th>
             <th>苗字</th>
             <th>名前</th>
             <th>メール</th>
@@ -19,11 +19,11 @@
         </thead>
         <tbody>
         <tr th:if="${users != null}" th:each="u:${users}">
-            <td th:text="${u.id}"></td>
-            <td th:text="${u.last_name}"></td>
-            <td th:text="${u.first_name}"></td>
+            <td th:text="${u.userName}"></td>
+            <td th:text="${u.lastName}"></td>
+            <td th:text="${u.firstName}"></td>
             <td th:text="${u.email}"></td>
-            <td th:text="${u.role.getRoleName()}"></td>
+            <td th:text="${u.roles}"></td>
         </tr>
         </tbody>
     </table>

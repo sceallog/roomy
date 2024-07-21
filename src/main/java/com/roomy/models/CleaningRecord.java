@@ -19,7 +19,7 @@ public class CleaningRecord {
 
     @ManyToOne
     @JoinColumn(name = "checker_id")
-    private User checker;
+    private UserEntity checker;
 
     private String status;
     private LocalDateTime cleaningStartTime;
