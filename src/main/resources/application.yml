@@ -24,3 +24,6 @@ spring:
   sql:
     init:
       mode: always
+  thymeleaf:
+    enabled: true
+    cache: false

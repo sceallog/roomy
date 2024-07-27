@@ -4,14 +4,15 @@
     <title>仕入れ先一覧</title>
 </head>
 <body>
-<nav th:replace="navbar"></nav>
-<div class="container">
-    <h1>仕入れ先一覧</h1>
-    <a href="vendors/new" class="btn btn-primary">仕入れ先登録</a>
-    <table class="table table-striped">
+<nav th:replace="~{navbar}"></nav>
+<div class="container py-4">
+    <div class="p-5 mb-4 bg-body-secondary rounded-3">
+        <div class="container-fluid">
+    <h1 class="text-center">仕入れ先一覧</h1>
+    <a href="vendors/new" class="btn btn-success btn-lg my-2">仕入れ先登録</a>
+    <table class="table table-striped align-middle">
         <thead>
         <tr>
-            <th>id</th>
             <th>社名</th>
             <th>担当者</th>
             <th>メール</th>
@@ -20,12 +21,13 @@
             <th>都道府県</th>
             <th>市町村</th>
             <th>住所</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
-        <tr th:if="${vendors != null}" th:each="v:${vendors}">
-            <td th:text="${v.id}"></td>
-            <td th:text="${v.name}"></td>
+        <tr th:if="${vendors != null}" th:each="v:${vendors}" class="my-auto">
+            <td><a th:href="@{/vendors/show/{vendorId}(vendorId=${v.id})}"
+                    th:text="${v.name}" class="link-dark"></a></td>
             <td th:text="${v.representative}"></td>
             <td th:text="${v.email}"></td>
             <td th:text="${v.telephoneNo}"></td>
@@ -33,9 +35,22 @@
             <td th:text="${v.prefecture}"></td>
             <td th:text="${v.city}"></td>
             <td th:text="${v.address}"></td>
+            <td>
+                <div class="d-grid gap-2 d-block d-flex">
+                    <form th:action="@{vendors/update/{id}(id=${v.id})}" method="get">
+                        <button type="submit" class="btn btn-outline-secondary">編集</button>
+                    </form>
+                    <form th:action="@{vendors/{id}(id=${v.id})}" method="post">
+                        <input type="hidden" name="_method" value="delete">
+                        <button type="submit" class="btn btn-outline-danger">削除</button>
+                    </form>
+                </div>
+            </td>
         </tr>
         </tbody>
     </table>
+            </div>
+        </div>
 </div>
 </body>
 </html>

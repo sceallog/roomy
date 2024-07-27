@@ -15,7 +15,7 @@ public class VendorService {
         return vendorRepo.findAll();
     }
 
-    public void saveVendor(Vendor vendor) {
-        vendorRepo.save(vendor);
+    public Vendor saveVendor(Vendor vendor) {
+        return vendorRepo.save(vendor);
     }
 }

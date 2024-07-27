@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{ head :: common_header(~{::title})}">
+    <title>Show Vendor</title>
+</head>
+<body class="bg-tertiary">
+<div th:replace="~{navbar}"></div>
+<div class="container py-4">
+    <div class="p-5 mb-4 bg-body-secondary rounded-3">
+        <div class="container-fluid">
+            <div class="row row-cols-1 row-cols-md-2">
+                <div class="col-md-6 mb-2 mb-md-0">
+                    <div class="vendor-info card" th:object="${vendor}">
+                        <div class="card-header d-flex justify-content-between bg-warning" style="min-height: 75px">
+                            <h4 class="card-title my-auto" th:text="*{name}"></h4>
+                            <div class="inline">
+                                <a th:href="@{/vendors}" class="btn btn-light back-btn btn-lg" data-toggle="tooltip"
+                                   title="仕入先一覧へ戻る">
+                                    <!--          <i class="fas fa-arrow-left"></i>-->
+                                    一覧へ
+                                </a>
+                                <!--        <%= link_to edit_ticket_path(@ticket), class: 'btn btn-circle edit-btn btn-lg', data: { toggle: 'tooltip', delay: { 'show': 300, 'hide': 100 } }, title: t('links.edit') do %>-->
+                                <!--        <i class="fas fa-pen"></i>-->
+                                <!--        <% end %>-->
+                                <!--        <%= link_to @ticket, method: :delete, title: t('links.delete'), data: { toggle: 'tooltip', delay: { 'show': 300, 'hide': 100 }, confirm: t('strings.resources.delete_really_dependents', resource: Ticket.model_name.human, dependent: Comment.model_name.human) }, class: 'btn btn-circle delete-btn btn-lg' do %>-->
+                                <!--        <i class="fas fa-trash"></i>-->
+                                <!--        <% end %>-->
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="vendor-details row">
+                                <div class="container ticket-info col">
+                                    <div class="row">
+                                        <div class="col">
+                                            <p class="text-muted">電話番号</p>
+                                            <p th:text="*{telephoneNo}"></p>
+                                            <p class="text-muted">メール</p>
+                                            <p th:text="*{email}"></p>
+                                        </div>
+                                        <div class="col">
+                                            <p class="text-muted">住所</p>
+                                            <p th:text="'〒' + *{zipCode}"></p>
+                                            <p th:text="*{prefecture} + *{city} + *{address}"></p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <p class="text-muted">担当者</p>
+                                        <p th:text="*{representative}"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-2 mb-md-0">
+                    <div class="vendor-info card" th:object="${items}">
+                        <div class="card-header d-flex bg-warning" style="min-height: 75px">
+                            <h4 class="card-title mt-auto mb-auto">取扱っている商品</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="inventory-details row">
+                                <div class="container inventory-info col">
+                                    <table class="table table-striped table-hover align-middle">
+                                        <thead>
+                                        <tr>
+                                            <th>品名</th>
+                                            <th>在庫</th>
+                                            <th>単価</th>
+                                            <th>金額</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="item : ${items}">
+                                            <td><a th:href="@{/inventory/show/{id}(id=${item.id})}" th:text="${item.name}" class="link-dark"></a></td>
+                                            <td th:text="${item.stock}"></td>
+                                            <td th:text="'¥ ' + ${item.price}"></td>
+                                            <td th:text="'¥ ' + ${#numbers.formatInteger((item.stock * item.price), 3, 'COMMA')}"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

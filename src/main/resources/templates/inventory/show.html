@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{ head :: common_header(~{::title})}">
+    <title>Show User</title>
+</head>
+<body class="bg-tertiary">
+<div th:replace="~{navbar}"></div>
+<div class="container py-4">
+    <div class="p-5 mb-4 bg-body-secondary rounded-3">
+        <div class="container-fluid">
+            <div class="item-info card" th:object="${item}">
+                <div class="card-header d-flex justify-content-between bg-warning" style="min-height: 75px">
+                    <h4 class="card-title my-auto" th:text="*{name}"></h4>
+                    <div class="d-grid gap-2 d-block d-flex my-auto">
+                        <form th:action="@{/inventory}" method="get">
+                            <button class="btn btn-light" data-toggle="tooltip" title="仕入先一覧へ戻る">一覧へ</button>
+                        </form>
+                        <form th:action="@{/inventory/update/{id}(id=${item.id})}" method="get">
+                            <button class="btn btn-secondary" data-toggle="tooltip" title="この商品を編集する">編集
+                            </button>
+                        </form>
+                        <form th:action="@{/inventory/{id}(id=${item.id})}" method="post">
+                            <input type="hidden" name="_method" value="delete">
+                            <button type="submit" class="btn btn-danger" data-toggle="tooltip"
+                                    title="この商品を削除kする">削除
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="item-details row">
+                        <div class="container item-info col">
+                            <div class="row">
+                                <div class="col">
+                                    <p class="text-muted">ID</p>
+                                    <p th:text="*{id}"></p>
+                                </div>
+                                <div class="col">
+                                    <p class="text-muted">仕入先</p>
+                                    <p th:text="*{vendor.name}"></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <p class="text-muted">在庫</p>
+                                    <p th:text="*{stock}"></p>
+                                </div>
+                                <div class="col">
+                                    <p class="text-muted">単価</p>
+                                    <p th:text="*{price}"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

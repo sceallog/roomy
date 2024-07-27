@@ -24,8 +24,11 @@ import static org.springframework.security.web.util.matcher.AntPathRequestMatche
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+
+
 public class SecurityConfig {
 
+    @Autowired
     private CustomUserDetailsService userDetailsService;
 
     @Autowired
@@ -47,7 +50,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(requests ->
                         requests.requestMatchers(
                                 PathRequest.toStaticResources().atCommonLocations(),
-                                antMatcher("/auth/**"),
+//                                antMatcher("/auth/**")
 //                                antMatcher("/world"),
 //                                antMatcher("/now"),
 //                                antMatcher("/users"),
@@ -56,33 +59,34 @@ public class SecurityConfig {
 //                                antMatcher("/login"),
 //                                antMatcher("/inventory/**")
                         ).permitAll().anyRequest().authenticated()
-//                ).formLogin(form ->
-//                        form.loginPage("/login").permitAll()
-//                ).logout(logout ->
-//                        logout.permitAll()
+                ).formLogin(form ->
+                        form.loginPage("/auth/login").permitAll()
+                ).logout(logout ->
+                        logout.permitAll()
                 ).csrf(csrf ->
                         csrf.ignoringRequestMatchers(
-                                antMatcher("/hello")
+                                antMatcher("/h2-console/**"),
+                                antMatcher("/auth/**")
                         ).csrfTokenRepository(new CookieCsrfTokenRepository())
                 );
         return http.build();
     }
 
-    @Bean
-    public UserDetailsService users() {
-        UserDetails admin = User.builder()
-                .username("admin")
-                .password("password")
-                .roles("ADMIN")
-                .build();
-        UserDetails user = User.builder()
-                .username("user")
-                .password("password")
-                .roles("USER")
-                .build();
-
-        return new InMemoryUserDetailsManager(user, admin);
-    }
+//    @Bean
+//    public UserDetailsService users() {
+//        UserDetails admin = User.builder()
+//                .username("admin")
+//                .password("password")
+//                .roles("ADMIN")
+//                .build();
+//        UserDetails user = User.builder()
+//                .username("user")
+//                .password("password")
+//                .roles("USER")
+//                .build();
+//
+//        return new InMemoryUserDetailsManager(user, admin);
+//    }
 
     @Bean
     public AuthenticationManager authenticationManager(
@@ -90,6 +94,8 @@ public class SecurityConfig {
     ) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
+    //TODO UserDetailsService and PasswordEncoder in the AuthenticationManager
+    //TODO WebSecurityConfigurationController
 
     @Bean
     PasswordEncoder passwordEncoder() {

@@ -5,29 +5,46 @@
 </head>
 <body>
 <nav th:replace="~{navbar}"></nav>
-<div class="container">
-    <h1>在庫管理</h1>
-    <a href="inventory/new" class="btn btn-primary">新規登録</a>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>品名</th>
-            <th>購入価格</th>
-            <th>在庫</th>
-            <th>販売者</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="item : ${items}">
-            <td th:text="${item.id}"></td>
-            <td th:text="${item.name}"></td>
-            <td th:text="${item.price}"></td>
-            <td th:text="${item.stock}"></td>
-            <a><td th:text="${item.vendor.name}"></td></a>
-        </tr>
-        </tbody>
-    </table>
+<div class="container py-4">
+    <div class="p-5 mb-4 bg-body-secondary rounded-3">
+        <div class="container-fluid">
+            <h1 class="text-center">商品一覧</h1>
+            <a href="inventory/new" class="btn btn-success btn-lg me-auto my-2">新規登録</a>
+            <table class="table table-striped align-middle">
+                <thead>
+                <tr>
+                    <th>品名</th>
+                    <th>在庫</th>
+                    <th>単価</th>
+                    <th>金額</th>
+                    <th>販売者</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item : ${items}">
+                    <td><a th:href="@{/inventory/show/{id}(id=${item.id})}" th:text="${item.name}" class="link-dark"></a></td>
+                    <td th:text="${item.stock}"></td>
+                    <td th:text="'¥ ' + ${item.price}"></td>
+                    <td th:text="'¥ ' + ${#numbers.formatInteger((item.stock * item.price), 1, 'COMMA')}"></td>
+                    <td><a th:href="@{/vendors/show/{vendorId}(vendorId=${item.vendor.id})}"
+                           th:text="${item.vendor.name}" class="link-dark"></a></td>
+                    <td>
+                        <div class="d-grid gap-2 d-block d-flex">
+                            <form th:action="@{inventory/update/{id}(id=${item.id})}" method="get">
+                                <button type="submit" class="btn btn-outline-secondary">変更</button>
+                            </form>
+                            <form th:action="@{inventory/{id}(id=${item.id})}" method="post">
+                                <input type="hidden" name="_method" value="delete">
+                                <button type="submit" class="btn btn-outline-danger">削除</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 </body>

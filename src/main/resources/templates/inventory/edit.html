@@ -4,29 +4,45 @@
     <title>商品編集</title>
 </head>
 <body>
-<div class="container">
-    <h1>商品の情報編集</h1>
-    <form th:action="@{/inventory/{id}(id=${item.id})}" th:object="${item}" method="post">
-        <div class="form-group">
-            <label for="name">商品名</label>
-            <input type="text" class="form-control" id="name" th:field="*{name}">
+<div th:replace="~{navbar}"></div>
+<div class="container py-4">
+    <div class="p-5 mb-4 bg-body-secondary rounded-3">
+        <div class="container-fluid">
+            <h1 class="text-center">商品の情報編集</h1>
+            <form th:action="@{/inventory/update/{id}(id=${item.id})}" th:object="${item}" method="post">
+                <input type="hidden" name="_method" value="put">
+                <div class="form-group">
+                    <label for="name">商品名</label>
+                    <input type="text" class="form-control" id="name" th:field="*{name}">
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label for="price">導入価格</label>
+                        <input type="text" class="form-control" id="price" th:field="*{price}">
+                    </div>
+                    <div class="col">
+                        <label for="stock">在庫</label>
+                        <input type="text" class="form-control" id="stock" th:field="*{stock}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="vendorId">仕入れ先</label>
+                    <select id="vendorId" name="vendorId" class="form-control">
+                        <option th:each="vendor : ${vendors}" th:value="${vendor.id}"
+                                th:selected="${vendor.id == item.vendor.id}" th:text="${vendor.name}"></option>
+                    </select>
+                </div>
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <button type="submit" class="btn btn-success mt-4">保存</button>
+                </div>
+            </form>
+            <form th:action="@{/inventory}" method="get">
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <button type="submit" class="btn btn-outline-danger mt-4">キャンセル</button>
+                </div>
+            </form>
         </div>
-        <div class="form-group">
-            <label for="price">導入価格</label>
-            <input type="text" class="form-control" id="price" th:field="*{price}">
-        </div>
-        <div class="form-group">
-            <label for="stock">在庫</label>
-            <input type="text" class="form-control" id="stock" th:field="*{stock}">
-        </div>
-        <div class="form-group">
-            <label for="vendorId">仕入れ先</label>
-            <select id="vendorId" name="vendorId" class="form-control">
-                <option th:each="vendor : ${vendors}" th:value="${vendor.id}" th:selected="${vendor.id == item.vendor.id}" th:text="${vendor.name}"></option>
-            </select>
-        </div>
-        <button type="submit" class="btn btn-primary">更新</button>
-    </form>
+    </div>
 </div>
 </body>
 </html>

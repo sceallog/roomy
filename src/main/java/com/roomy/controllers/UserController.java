@@ -2,6 +2,7 @@ package com.roomy.controllers;
 
 import com.roomy.models.UserEntity;
 import com.roomy.repositories.UserRepository;
+import com.roomy.services.RoleService;
 import com.roomy.services.UserService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -17,10 +18,12 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
     private final UserRepository userRepository;
+    private final RoleService roleService;
 
-    public UserController(UserService userService, UserRepository userRepository) {
+    public UserController(UserService userService, UserRepository userRepository, RoleService roleService) {
         this.userService = userService;
         this.userRepository = userRepository;
+        this.roleService = roleService;
     }
 
     @GetMapping
@@ -28,6 +31,13 @@ public class UserController {
         List<UserEntity> users = userService.getAllUsers();
         model.addAttribute("users", users);
         return "user/users";
+    }
+
+    @GetMapping("new")
+    public String createNewUser(Model model) {
+        model.addAttribute("user", new UserEntity());
+        model.addAttribute("roles", roleService.getAllRoles());
+        return "user/create";
     }
 
     @PreAuthorize("hasRole('ADMIN')")

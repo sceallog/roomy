@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{ head :: common_header(~{::title})}">
-    <title>仕入先登録</title>
+    <title>仕入先の編集</title>
 </head>
 <body>
 <div th:replace="~{navbar}"></div>
 <div class="container py-4">
     <div class="p-5 mb-4 bg-body-secondary rounded-3">
         <div class="container-fluid">
-            <h1 class="text-center">仕入先の新規登録</h1>
-            <form th:action="@{/vendors}" th:object="${vendor}" method="post">
+            <h1 class="text-center">仕入先の情報編集</h1>
+            <form th:action="@{/vendors/update/{id}(id=${vendor.id})}" th:object="${vendor}" method="post">
+                <input type="hidden" name="_method" value="put">
                 <div class="row">
                     <div class="col">
                         <label for="name">企業名</label>
@@ -49,7 +50,12 @@
                     </div>
                 </div>
                 <div class="d-grid gap-2 col-6 mx-auto">
-                    <button type="submit" class="btn btn-success mt-4">登録</button>
+                    <button type="submit" class="btn btn-success mt-4">保存</button>
+                </div>
+            </form>
+            <form th:action="@{/vendors}" method="get">
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <button type="submit" class="btn btn-outline-danger mt-4">キャンセル</button>
                 </div>
             </form>
         </div>
