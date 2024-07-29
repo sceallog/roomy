@@ -5,6 +5,7 @@ import com.roomy.repositories.UserRepository;
 import com.roomy.services.RoleService;
 import com.roomy.services.UserService;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/users")
+@EnableMethodSecurity
 public class UserController {
     private final UserService userService;
     private final UserRepository userRepository;

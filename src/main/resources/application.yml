@@ -27,3 +27,6 @@ spring:
   thymeleaf:
     enabled: true
     cache: false
+  security:
+    user:
+      password: password
