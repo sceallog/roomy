@@ -1,6 +1,5 @@
 package com.roomy.controllers;
 
-import com.roomy.models.InventoryItem;
 import com.roomy.models.Vendor;
 import com.roomy.repositories.InventoryItemRepository;
 import com.roomy.repositories.VendorRepository;
@@ -64,6 +63,13 @@ public class VendorController {
             model.addAttribute("items", items);
         });
         return "vendor/show";
+    }
+
+    @GetMapping("/search")
+    public String search(@RequestParam("keyword") String keyword, Model model) {
+        List<Vendor> vendors = vendorService.searchVendors(keyword);
+        model.addAttribute("vendors", vendors);
+        return "vendor/vendors";
     }
 
     @DeleteMapping("/{id}")

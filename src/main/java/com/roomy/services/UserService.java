@@ -3,6 +3,7 @@ package com.roomy.services;
 import com.roomy.models.UserEntity;
 import com.roomy.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -35,6 +36,19 @@ public class UserService implements UserDetailsService {
 
     public List<UserEntity> getAllUsers() {
         return userRepo.findAll();
+    }
+
+    public UserEntity saveUser(UserEntity userEntity) { return userRepo.save(userEntity); }
+
+    public List<UserEntity> searchUsers(String keyword) {
+        return userRepo.findAll((Specification<UserEntity>) (root, query, builder) ->
+                builder.or(
+                        builder.like(root.get("firstName"), "%" + keyword + "%"),
+                        builder.like(root.get("lastName"), "%" + keyword + "%"),
+                        builder.like(root.get("userName"), "%" + keyword + "%"),
+                        builder.like(root.get("email"), "%" + keyword + "%")
+                )
+        );
     }
 
 }

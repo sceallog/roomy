@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{ head :: common_header(~{::title})}">
     <title>仕入先登録</title>
 </head>
@@ -50,6 +50,11 @@
                 </div>
                 <div class="d-grid gap-2 col-6 mx-auto">
                     <button type="submit" class="btn btn-success mt-4">登録</button>
+                </div>
+            </form>
+            <form th:action="@{/vendors}" method="get">
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <button type="submit" class="btn btn-outline-danger mt-4">キャンセル</button>
                 </div>
             </form>
         </div>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{ head :: common_header(~{::title})}">
     <title>Show Vendor</title>
 </head>
@@ -13,18 +13,20 @@
                     <div class="vendor-info card" th:object="${vendor}">
                         <div class="card-header d-flex justify-content-between bg-warning" style="min-height: 75px">
                             <h4 class="card-title my-auto" th:text="*{name}"></h4>
-                            <div class="inline">
-                                <a th:href="@{/vendors}" class="btn btn-light back-btn btn-lg" data-toggle="tooltip"
-                                   title="仕入先一覧へ戻る">
-                                    <!--          <i class="fas fa-arrow-left"></i>-->
-                                    一覧へ
-                                </a>
-                                <!--        <%= link_to edit_ticket_path(@ticket), class: 'btn btn-circle edit-btn btn-lg', data: { toggle: 'tooltip', delay: { 'show': 300, 'hide': 100 } }, title: t('links.edit') do %>-->
-                                <!--        <i class="fas fa-pen"></i>-->
-                                <!--        <% end %>-->
-                                <!--        <%= link_to @ticket, method: :delete, title: t('links.delete'), data: { toggle: 'tooltip', delay: { 'show': 300, 'hide': 100 }, confirm: t('strings.resources.delete_really_dependents', resource: Ticket.model_name.human, dependent: Comment.model_name.human) }, class: 'btn btn-circle delete-btn btn-lg' do %>-->
-                                <!--        <i class="fas fa-trash"></i>-->
-                                <!--        <% end %>-->
+                            <div class="d-grid gap-2 d-block d-flex my-auto">
+                                <form th:action="@{/vendors}" method="get">
+                                    <button class="btn btn-light" data-toggle="tooltip" title="仕入先一覧へ戻る">一覧へ</button>
+                                </form>
+                                <form th:action="@{/vendors/update/{id}(id=${vendor.id})}" method="get">
+                                    <button class="btn btn-secondary" data-toggle="tooltip" title="この仕入先を編集する">編集
+                                    </button>
+                                </form>
+                                <form th:action="@{/vendors/{id}(id=${vendor.id})}" method="post">
+                                    <input type="hidden" name="_method" value="delete">
+                                    <button type="submit" class="btn btn-danger" data-toggle="tooltip"
+                                            title="この仕入先を削除する">削除
+                                    </button>
+                                </form>
                             </div>
                         </div>
                         <div class="card-body">
@@ -72,8 +74,8 @@
                                         <tbody>
                                         <tr th:each="item : ${items}">
                                             <td><a th:href="@{/inventory/show/{id}(id=${item.id})}" th:text="${item.name}" class="link-dark"></a></td>
-                                            <td th:text="${item.stock}"></td>
-                                            <td th:text="'¥ ' + ${item.price}"></td>
+                                            <td th:text="${#numbers.formatInteger((item.stock), 1, 'COMMA')}"></td>
+                                            <td th:text="'¥ ' + ${#numbers.formatInteger((item.price), 1, 'COMMA')}"></td>
                                             <td th:text="'¥ ' + ${#numbers.formatInteger((item.stock * item.price), 3, 'COMMA')}"></td>
                                         </tr>
                                         </tbody>

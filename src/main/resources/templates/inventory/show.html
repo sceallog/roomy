@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{ head :: common_header(~{::title})}">
     <title>Show User</title>
 </head>
@@ -13,7 +13,7 @@
                     <h4 class="card-title my-auto" th:text="*{name}"></h4>
                     <div class="d-grid gap-2 d-block d-flex my-auto">
                         <form th:action="@{/inventory}" method="get">
-                            <button class="btn btn-light" data-toggle="tooltip" title="仕入先一覧へ戻る">一覧へ</button>
+                            <button class="btn btn-light" data-toggle="tooltip" title="商品一覧へ戻る">一覧へ</button>
                         </form>
                         <form th:action="@{/inventory/update/{id}(id=${item.id})}" method="get">
                             <button class="btn btn-secondary" data-toggle="tooltip" title="この商品を編集する">編集
@@ -22,7 +22,7 @@
                         <form th:action="@{/inventory/{id}(id=${item.id})}" method="post">
                             <input type="hidden" name="_method" value="delete">
                             <button type="submit" class="btn btn-danger" data-toggle="tooltip"
-                                    title="この商品を削除kする">削除
+                                    title="この商品を削除する">削除
                             </button>
                         </form>
                     </div>
@@ -37,17 +37,19 @@
                                 </div>
                                 <div class="col">
                                     <p class="text-muted">仕入先</p>
-                                    <p th:text="*{vendor.name}"></p>
+                                    <a th:href="@{/vendors/show/{vendorId}(vendorId=${item.vendor.id})}"
+                                       th:text="*{vendor.name}"
+                                    class="link-dark"></a>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col">
                                     <p class="text-muted">在庫</p>
-                                    <p th:text="*{stock}"></p>
+                                    <p th:text="*{#numbers.formatInteger((stock), 1, 'COMMA')}"></p>
                                 </div>
                                 <div class="col">
                                     <p class="text-muted">単価</p>
-                                    <p th:text="*{price}"></p>
+                                    <p th:text="'¥ ' + *{#numbers.formatInteger((price), 1, 'COMMA')}"></p>
                                 </div>
                             </div>
                         </div>

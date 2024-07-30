@@ -14,15 +14,15 @@
                     <form th:action="@{/inventory/new}">
                         <button class="btn btn-success btn-lg">新規登録</button>
                     </form>
-                        <form th:action="@{/inventory/search}" method="get" class="row g-2">
-                            <div class="col-auto">
-                                <input type="text" name="keyword" id="search-input" class="form-control me-2"
-                                       placeholder="品名を検索">
-                            </div>
-                            <div class="col-auto">
-                                <button type="submit" class="btn btn-dark">検索</button>
-                            </div>
-                        </form>
+                    <form th:action="@{/inventory/search}" method="get" class="row g-2">
+                        <div class="col-auto">
+                            <input type="text" name="keyword" id="search-input" class="form-control me-2"
+                                   placeholder="品名を検索">
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-dark">検索</button>
+                        </div>
+                    </form>
                 </div>
             </div>
             <table class="table table-striped align-middle">
@@ -40,15 +40,15 @@
                 <tr th:each="item : ${items}">
                     <td><a th:href="@{/inventory/show/{id}(id=${item.id})}" th:text="${item.name}"
                            class="link-dark"></a></td>
-                    <td th:text="${item.stock}"></td>
-                    <td th:text="'¥ ' + ${item.price}"></td>
+                    <td th:text="${#numbers.formatInteger((item.stock), 1, 'COMMA')}"></td>
+                    <td th:text="'¥ ' + ${#numbers.formatInteger((item.price), 1, 'COMMA')}"></td>
                     <td th:text="'¥ ' + ${#numbers.formatInteger((item.stock * item.price), 1, 'COMMA')}"></td>
                     <td><a th:href="@{/vendors/show/{vendorId}(vendorId=${item.vendor.id})}"
                            th:text="${item.vendor.name}" class="link-dark"></a></td>
                     <td>
                         <div class="d-grid gap-2 d-block d-flex">
                             <form th:action="@{inventory/update/{id}(id=${item.id})}" method="get">
-                                <button type="submit" class="btn btn-outline-secondary">変更</button>
+                                <button type="submit" class="btn btn-outline-secondary">編集</button>
                             </form>
                             <form th:action="@{inventory/{id}(id=${item.id})}" method="post">
                                 <input type="hidden" name="_method" value="delete">

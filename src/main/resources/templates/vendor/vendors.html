@@ -9,7 +9,22 @@
     <div class="p-5 mb-4 bg-body-secondary rounded-3">
         <div class="container-fluid">
     <h1 class="text-center">仕入れ先一覧</h1>
-    <a href="vendors/new" class="btn btn-success btn-lg my-2">仕入れ先登録</a>
+            <div class="container">
+                <div class="d-flex justify-content-between mb-3">
+                    <form th:action="@{/vendors/new}">
+                        <button class="btn btn-success btn-lg">新規登録</button>
+                    </form>
+                    <form th:action="@{/vendors/search}" method="get" class="row g-2">
+                        <div class="col-auto">
+                            <input type="text" name="keyword" id="search-input" class="form-control me-2"
+                                   placeholder="仕入先を検索">
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-dark">検索</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
     <table class="table table-striped align-middle">
         <thead>
         <tr>
