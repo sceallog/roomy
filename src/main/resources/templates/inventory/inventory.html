@@ -9,7 +9,22 @@
     <div class="p-5 mb-4 bg-body-secondary rounded-3">
         <div class="container-fluid">
             <h1 class="text-center">商品一覧</h1>
-            <a href="inventory/new" class="btn btn-success btn-lg me-auto my-2">新規登録</a>
+            <div class="container">
+                <div class="d-flex justify-content-between mb-3">
+                    <form th:action="@{/inventory/new}">
+                        <button class="btn btn-success btn-lg">新規登録</button>
+                    </form>
+                        <form th:action="@{/inventory/search}" method="get" class="row g-2">
+                            <div class="col-auto">
+                                <input type="text" name="keyword" id="search-input" class="form-control me-2"
+                                       placeholder="品名を検索">
+                            </div>
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-dark">検索</button>
+                            </div>
+                        </form>
+                </div>
+            </div>
             <table class="table table-striped align-middle">
                 <thead>
                 <tr>
@@ -23,7 +38,8 @@
                 </thead>
                 <tbody>
                 <tr th:each="item : ${items}">
-                    <td><a th:href="@{/inventory/show/{id}(id=${item.id})}" th:text="${item.name}" class="link-dark"></a></td>
+                    <td><a th:href="@{/inventory/show/{id}(id=${item.id})}" th:text="${item.name}"
+                           class="link-dark"></a></td>
                     <td th:text="${item.stock}"></td>
                     <td th:text="'¥ ' + ${item.price}"></td>
                     <td th:text="'¥ ' + ${#numbers.formatInteger((item.stock * item.price), 1, 'COMMA')}"></td>

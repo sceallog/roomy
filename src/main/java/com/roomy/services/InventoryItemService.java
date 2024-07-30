@@ -4,18 +4,19 @@ import com.roomy.models.InventoryItem;
 import com.roomy.models.Vendor;
 import com.roomy.repositories.InventoryItemRepository;
 import com.roomy.repositories.VendorRepository;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class InventoryService {
+public class InventoryItemService {
 
     private final InventoryItemRepository inventoryItemRepo;
     private final VendorRepository vendorRepo;
 
-    public InventoryService(InventoryItemRepository inventoryItemRepo, VendorRepository vendorRepo) {
+    public InventoryItemService(InventoryItemRepository inventoryItemRepo, VendorRepository vendorRepo) {
         this.inventoryItemRepo = inventoryItemRepo;
         this.vendorRepo = vendorRepo;
     }
@@ -39,5 +40,13 @@ public class InventoryService {
 
     public Vendor saveVendor(Vendor vendor) {
         return vendorRepo.save(vendor);
+    }
+
+    public List<InventoryItem> searchItems(String keyword) {
+        return inventoryItemRepo.findAll((Specification<InventoryItem>) (root, query, builder) ->
+                builder.or(
+                        builder.like(root.get("name"), "%" + keyword + "%")
+                )
+        );
     }
 }

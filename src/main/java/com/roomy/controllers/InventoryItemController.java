@@ -2,10 +2,8 @@ package com.roomy.controllers;
 
 import com.roomy.models.Vendor;
 import com.roomy.repositories.InventoryItemRepository;
-import com.roomy.services.InventoryService;
+import com.roomy.services.InventoryItemService;
 import com.roomy.models.InventoryItem;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
@@ -15,18 +13,18 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/inventory")
-public class InventoryController {
-    private final InventoryService inventoryService;
+public class InventoryItemController {
+    private final InventoryItemService inventoryItemService;
     private final InventoryItemRepository inventoryItemRepository;
 
-    public InventoryController(InventoryService inventoryService, InventoryItemRepository inventoryItemRepository) {
-        this.inventoryService = inventoryService;
+    public InventoryItemController(InventoryItemService inventoryItemService, InventoryItemRepository inventoryItemRepository) {
+        this.inventoryItemService = inventoryItemService;
         this.inventoryItemRepository = inventoryItemRepository;
     }
 
     @GetMapping
     public String getAllItems(Model model) {
-        List<InventoryItem> items = inventoryService.getAllItems();
+        List<InventoryItem> items = inventoryItemService.getAllItems();
         model.addAttribute("items", items);
         return "inventory/inventory";
     }
@@ -42,7 +40,7 @@ public class InventoryController {
     @GetMapping("/new")
     public String createNewItem(Model model) {
         model.addAttribute("item", new InventoryItem());
-        model.addAttribute("vendors", inventoryService.getAllVendors());
+        model.addAttribute("vendors", inventoryItemService.getAllVendors());
         return "inventory/create";
     }
 
@@ -54,15 +52,22 @@ public class InventoryController {
         }
         InventoryItem item = itemOptional.get();
         model.addAttribute("item", item);
-        model.addAttribute("vendors", inventoryService.getAllVendors());
+        model.addAttribute("vendors", inventoryItemService.getAllVendors());
         return "inventory/edit";
+    }
+
+    @GetMapping("/search")
+    public String search(@RequestParam("keyword") String keyword, Model model) {
+        List<InventoryItem> items = inventoryItemService.searchItems(keyword);
+        model.addAttribute("items", items);
+        return "inventory/inventory";
     }
 
     @PostMapping
     public String saveItem(@ModelAttribute InventoryItem item, @RequestParam int vendorId) {
-        Vendor vendor = inventoryService.getVendorById(vendorId);
+        Vendor vendor = inventoryItemService.getVendorById(vendorId);
         item.setVendor(vendor);
-        inventoryService.saveItem(item);
+        inventoryItemService.saveItem(item);
         return"redirect:/inventory";
     }
 
@@ -73,7 +78,7 @@ public class InventoryController {
             return null;
         }
         InventoryItem itemToUpdate = itemOptional.get();
-        Vendor newVendor = inventoryService.getVendorById(vendorId);
+        Vendor newVendor = inventoryItemService.getVendorById(vendorId);
         if (!itemToUpdate.getName().equals(item.getName())) {
             itemToUpdate.setName(item.getName());
         }
@@ -86,7 +91,7 @@ public class InventoryController {
         if (!itemToUpdate.getVendor().equals(newVendor)) {
             itemToUpdate.setVendor(newVendor);
         }
-        inventoryService.saveItem(itemToUpdate);
+        inventoryItemService.saveItem(itemToUpdate);
         return"redirect:/inventory/show/" + id;
     }
 
