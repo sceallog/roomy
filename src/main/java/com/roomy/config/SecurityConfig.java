@@ -43,12 +43,20 @@ public class SecurityConfig {
 //    }
 
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests((requests) ->
                 requests.requestMatchers("/h2-console/**").permitAll()
-                        .anyRequest().authenticated());
-        http.sessionManagement((session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)));
-        http.httpBasic(withDefaults());
+                        .requestMatchers("/login").permitAll()
+                        .requestMatchers("/logout").permitAll()
+                        .requestMatchers("/auth/**").permitAll()
+//                        .requestMatchers("/inventory").permitAll()
+                        .anyRequest().authenticated()
+        )
+                .formLogin(form ->
+                        form.defaultSuccessUrl("/inventory", true))
+                .logout(config -> config.logoutSuccessUrl("/login"));
+        http.sessionManagement((session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS)));
+//        http.httpBasic(withDefaults());
         http.headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin));
         http.csrf(csrf ->
                         csrf.ignoringRequestMatchers(
@@ -90,25 +98,25 @@ public class SecurityConfig {
         return http.build();
     }
 
-    @Bean
-    public UserDetailsService users() {
-        UserDetails admin = User.builder()
-                .username("admin")
-                .password(passwordEncoder().encode("password"))
-                .roles("ADMIN")
-                .build();
-        UserDetails user = User.builder()
-                .username("user")
-                .password(passwordEncoder().encode("password"))
-                .roles("USER")
-                .build();
-
-        JdbcUserDetailsManager userDetailsManager = new JdbcUserDetailsManager(dataSource);
-        userDetailsManager.createUser(user);
-        userDetailsManager.createUser(admin);
-        return userDetailsManager;
+//    @Bean
+//    public UserDetailsService users() {
+//        UserDetails admin = User.builder()
+//                .username("admin")
+//                .password(passwordEncoder().encode("password"))
+//                .roles("ADMIN")
+//                .build();
+//        UserDetails user = User.builder()
+//                .username("user")
+//                .password(passwordEncoder().encode("password"))
+//                .roles("USER")
+//                .build();
+//
+//        JdbcUserDetailsManager userDetailsManager = new JdbcUserDetailsManager(dataSource);
+//        userDetailsManager.createUser(user);
+//        userDetailsManager.createUser(admin);
+//        return userDetailsManager;
 //        return new InMemoryUserDetailsManager(user, admin);
-    }
+//    }
 
 //    @Bean
 //    public AuthenticationManager authenticationManager(
