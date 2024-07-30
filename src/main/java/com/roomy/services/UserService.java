@@ -20,13 +20,13 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserEntity userEntity = userRepo.findByUserName(username);
 
-        if (userEntity != null) {
-            return User.withUsername(userEntity.getUserName())
-                    .password(userEntity.getPassword())
-                    .roles(userEntity.getRole())
-                    .build();
+        if (userEntity == null) {
+            throw new UsernameNotFoundException("ユーザが見つかりませんでした。");
         }
-        return null;
+        return User.withUsername(userEntity.getUserName())
+                .password(userEntity.getPassword())
+                .roles(userEntity.getRole())
+                .build();
     }
 
     public UserService(UserRepository userRepo) {
