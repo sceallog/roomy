@@ -41,7 +41,7 @@ public class VendorController {
     public String getVendorToUpdate(@PathVariable int id, Model model) {
         Optional<Vendor> vendorOptional = vendorRepository.findById(id);
         if (!vendorOptional.isPresent()) {
-            return null;
+            throw new RuntimeException("仕入先を見つかりませんでした。");
         }
         Vendor vendor = vendorOptional.get();
         model.addAttribute("vendor", vendor);
@@ -76,7 +76,7 @@ public class VendorController {
     public String deleteVendor(@PathVariable int id) {
         Optional<Vendor> vendorOptional = vendorRepository.findById(id);
         if (!vendorOptional.isPresent()) {
-            return null;
+            throw new RuntimeException("仕入先を見つかりませんでした。");
         }
         Vendor vendor = vendorOptional.get();
         vendorRepository.delete(vendor);
@@ -87,7 +87,7 @@ public class VendorController {
     public String updateVendor(@PathVariable int id, @ModelAttribute Vendor vendor) {
         Optional<Vendor> vendorOptional = vendorRepository.findById(id);
         if (!vendorOptional.isPresent()) {
-            return null;
+            throw new RuntimeException("仕入先を見つかりませんでした。");
         }
         Vendor vendorToUpdate = vendorOptional.get();
         if (!vendorToUpdate.getName().equals(vendor.getName())) {

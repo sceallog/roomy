@@ -4,59 +4,54 @@
     <title>ユーザー編集</title>
 </head>
 <body>
-<div class="container">
-    <h1>ユーザー情報の編集</h1>
-    <div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
-        <strong>ユーザ登録が完了しました。</strong>
-        <a class="ms-2" href="roomy/login">ログイン</a>
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+<div class="container py-4">
+    <div class="p-5 mb-4 bg-body-secondary rounded-3">
+        <div class="container-fluid">
+            <h1 class="text-center">ユーザー情報の編集</h1>
+            <div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>ユーザ登録が完了しました。</strong>
+                <a class="ms-2" href="roomy/login">ログイン</a>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            <form th:action="@{/users/update/{id}(id=${user.id})}" th:object="${user}" method="post">
+                <input type="hidden" name="_method" value="put"/>
+                <div class="form-group">
+                    <label for="last_name">苗字</label>
+                    <input type="text" class="form-control" id="last_name" th:field="*{lastName}">
+                    <p th:if="${#fields.hasErrors('lastName')}"
+                       th:errorclass="text-danger"
+                       th:errors="*{lastName}"></p>
+                </div>
+                <div class="form-group">
+                    <label for="first_name">名前</label>
+                    <input type="text" class="form-control" id="first_name" th:field="*{firstName}">
+                    <p th:if="${#fields.hasErrors('firstName')}"
+                       th:errorclass="text-danger"
+                       th:errors="*{firstName}"></p>
+                </div>
+                <div class="form-group">
+                    <label for="username">ユーザー名</label>
+                    <input type="text" class="form-control" id="username" th:field="*{userName}">
+                    <p th:if="${#fields.hasErrors('userName')}"
+                       th:errorclass="text-danger"
+                       th:errors="*{userName}"></p>
+                </div>
+                <div class="form-group">
+                    <label for="email">メール</label>
+                    <input type="text" class="form-control" id="email" th:field="*{email}">
+                    <p th:if="${#fields.hasErrors('email')}"
+                       th:errorclass="text-danger"
+                       th:errors="*{email}"></p>
+                </div>
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <button type="submit" class="btn btn-success mt-4">保存</button>
+                </div>
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <a href="/roomy/users" class="btn btn-outline-danger mt-4">キャンセル</a>
+                </div>
+            </form>
+        </div>
     </div>
-    <form th:action="@{/users/update/{id}(id=${user.id})}" th:object="${user}" method="post">
-        <input type="hidden" name="_method" value="put" />
-        <div class="form-group">
-            <label for="last_name">苗字</label>
-            <input type="text" class="form-control" id="last_name" th:field="*{lastName}">
-            <p th:if="${#fields.hasErrors('lastName')}"
-               th:errorclass="text-danger"
-               th:errors="*{lastName}"></p>
-        </div>
-        <div class="form-group">
-            <label for="first_name">名前</label>
-            <input type="text" class="form-control" id="first_name" th:field="*{firstName}">
-            <p th:if="${#fields.hasErrors('firstName')}"
-               th:errorclass="text-danger"
-               th:errors="*{firstName}"></p>
-        </div>
-        <div class="form-group">
-            <label for="username">ユーザー名</label>
-            <input type="text" class="form-control" id="username" th:field="*{userName}">
-            <p th:if="${#fields.hasErrors('userName')}"
-               th:errorclass="text-danger"
-               th:errors="*{userName}"></p>
-        </div>
-        <div class="form-group">
-            <label for="password">パスワード</label>
-            <input type="password" class="form-control" id="password" th:field="*{password}">
-            <p th:if="${#fields.hasErrors('password')}"
-               th:errorclass="text-danger"
-               th:errors="*{password}"></p>
-        </div>
-        <div class="form-group">
-            <label for="email">メール</label>
-            <input type="text" class="form-control" id="email" th:field="*{email}">
-            <p th:if="${#fields.hasErrors('email')}"
-               th:errorclass="text-danger"
-               th:errors="*{email}"></p>
-        </div>
-        <div class="form-group">
-            <label for="role">役割</label>
-            <select id="role" name="role" class="form-control">
-                <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.name}"></option>
-            </select>
-        </div>
-        <button type="submit" class="btn btn-primary">保存</button>
-        <a href="/roomy/users" class="btn btn-outline-danger">キャンセル</a>
-    </form>
 </div>
 </body>
 </html>

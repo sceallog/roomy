@@ -8,12 +8,9 @@
 <div class="container py-4">
     <div class="p-5 mb-4 bg-body-secondary rounded-3">
         <div class="container-fluid">
-    <h1 class="text-center">ユーザー 一覧</h1>
+            <h1 class="text-center">ユーザー 一覧</h1>
             <div class="container">
-                <div class="d-flex justify-content-between mb-3">
-                    <form th:action="@{/auth/register}">
-                        <button class="btn btn-success btn-lg">新規登録</button>
-                    </form>
+                <div class="d-flex justify-content-end mb-3">
                     <form th:action="@{/users/search}" method="get" class="row g-2">
                         <div class="col-auto">
                             <input type="text" name="keyword" id="search-input" class="form-control me-2"
@@ -24,41 +21,41 @@
                         </div>
                     </form>
                 </div>
-    <table class="table table-striped align-middle">
-        <thead>
-        <tr>
-            <th>ユーザー名</th>
-            <th>苗字</th>
-            <th>名前</th>
-            <th>メール</th>
-            <th></th>
-<!--            <th>役割</th>-->
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:if="${users != null}" th:each="u:${users}">
-            <td th:text="${u.userName}"></td>
-            <td th:text="${u.lastName}"></td>
-            <td th:text="${u.firstName}"></td>
-            <td th:text="${u.email}"></td>
-<!--            <td th:text="${u.roles}"></td>-->
-            <td>
-                <div class="d-grid gap-2 d-block d-flex">
-                    <form th:action="@{users/update/{id}(id=${u.id})}" method="get">
-                        <button type="submit" class="btn btn-outline-secondary">編集</button>
-                    </form>
-                    <form th:action="@{users/{id}(id=${u.id})}" method="post">
-                        <input type="hidden" name="_method" value="delete">
-                        <button type="submit" class="btn btn-outline-danger">削除</button>
-                    </form>
-                </div>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+                <table class="table table-striped align-middle">
+                    <thead>
+                    <tr>
+                        <th>ユーザー名</th>
+                        <th>苗字</th>
+                        <th>名前</th>
+                        <th>メール</th>
+                        <th></th>
+                        <!--            <th>役割</th>-->
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:if="${users != null}" th:each="u:${users}">
+                        <td th:text="${u.userName}"></td>
+                        <td th:text="${u.lastName}"></td>
+                        <td th:text="${u.firstName}"></td>
+                        <td th:text="${u.email}"></td>
+                        <!--            <td th:text="${u.roles}"></td>-->
+                        <td>
+                            <div class="d-grid gap-2 d-block d-flex">
+                                <form th:action="@{users/update/{id}(id=${u.id})}" method="get">
+                                    <button type="submit" class="btn btn-outline-secondary">編集</button>
+                                </form>
+                                <form th:action="@{users/{id}(id=${u.id})}" method="post">
+                                    <input type="hidden" name="_method" value="delete">
+                                    <button type="submit" class="btn btn-outline-danger">削除</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-</div>
+    </div>
 </div>
 </body>
 </html>

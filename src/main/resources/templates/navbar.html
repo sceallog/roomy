@@ -17,18 +17,8 @@
                 </li>
             </ul>
             <div class="d-flex">
-            <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle"  role="button" data-bs-toggle="dropdown" data-bs-display="static">メニュー</a>
-                <ul class="dropdown-menu dropdown-menu-lg-end">
-                    <li><a th:href="@{/users}" class="dropdown-item">プロフィール</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><a th:href="@{/auth/logout}" class="dropdown-item text-danger">ログアウト</a></li>
-                </ul>
+                <a th:href="@{/auth/logout}" class="btn btn-outline-danger">ログアウト</a>
             </div>
-            </div>
-
         </div>
     </div>
 </nav>

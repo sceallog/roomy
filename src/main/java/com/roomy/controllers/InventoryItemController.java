@@ -48,7 +48,7 @@ public class InventoryItemController {
     public String getItemToUpdate(@PathVariable("id") Integer id, Model model) {
         Optional<InventoryItem> itemOptional = inventoryItemRepository.findById(id);
         if (!itemOptional.isPresent()) {
-            return null;
+            throw new RuntimeException("商品を見つかりませんでした。");
         }
         InventoryItem item = itemOptional.get();
         model.addAttribute("item", item);
@@ -75,7 +75,7 @@ public class InventoryItemController {
     public String updateItem(@PathVariable int id, @ModelAttribute InventoryItem item, @RequestParam int vendorId) {
         Optional<InventoryItem> itemOptional = inventoryItemRepository.findById(id);
         if (!itemOptional.isPresent()) {
-            return null;
+            throw new RuntimeException("商品を見つかりませんでした。");
         }
         InventoryItem itemToUpdate = itemOptional.get();
         Vendor newVendor = inventoryItemService.getVendorById(vendorId);
@@ -99,7 +99,7 @@ public class InventoryItemController {
     public String deleteItem(@PathVariable("id") Integer id) {
         Optional<InventoryItem> itemOptional = inventoryItemRepository.findById(id);
         if (!itemOptional.isPresent()) {
-            return null;
+            throw new RuntimeException("商品をも見つかりませんでした。");
         }
         InventoryItem item = itemOptional.get();
         inventoryItemRepository.delete(item);

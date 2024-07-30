@@ -38,10 +38,6 @@ public class InventoryItemService {
         return vendorOptional.orElseThrow(() -> new RuntimeException("仕入れ先を見つかりませんでした。"));
     }
 
-    public Vendor saveVendor(Vendor vendor) {
-        return vendorRepo.save(vendor);
-    }
-
     public List<InventoryItem> searchItems(String keyword) {
         return inventoryItemRepo.findAll((Specification<InventoryItem>) (root, query, builder) ->
                 builder.or(

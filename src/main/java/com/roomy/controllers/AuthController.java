@@ -78,7 +78,7 @@ public class AuthController {
         newUser.setEmail(registerDto.getEmail());
         newUser.setPassword(bCryptEncoder.encode(registerDto.getPassword()));
         newUser.setUserName(registerDto.getUserName());
-        newUser.setRole("USER");
+        newUser.setRole("ADMIN");
         newUser.setCreatedAt(new Date());
 
         userRepo.save(newUser);

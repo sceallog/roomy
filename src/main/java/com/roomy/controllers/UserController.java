@@ -72,7 +72,7 @@ public class UserController {
         }
 
         userService.saveUser(userToUpdate);
-        return "redirect:/users/show/" + id;
+        return "redirect:/users";
     }
 
     @DeleteMapping("/{id}")

@@ -40,7 +40,6 @@ public class SecurityConfig {
                         .requestMatchers("/login").permitAll()
                         .requestMatchers("/logout").permitAll()
                         .requestMatchers("/auth/**").permitAll()
-//                        .requestMatchers("/inventory").permitAll()
                         .anyRequest().authenticated()
         )
                 .formLogin(form ->
@@ -57,38 +56,6 @@ public class SecurityConfig {
                                 antMatcher("/h2-console/**"),
                                 antMatcher("/auth/**")
                         ).csrfTokenRepository(new CookieCsrfTokenRepository()));
-//        http.securityMatcher(antMatcher("/h2-console/**"))
-//                .authorizeHttpRequests(requests ->
-//                        requests.requestMatchers(antMatcher("/h2-console/**")).permitAll());
-//                http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-//                http.csrf(csrf ->
-//                        csrf.ignoringRequestMatchers(antMatcher("/h2-console/**")))
-//                .headers(headers ->
-//                        headers.frameOptions(frame -> frame.sameOrigin())
-//                );
-//                .securityMatcher("/**")
-//                .authorizeHttpRequests(requests ->
-//                        requests.requestMatchers(
-//                                PathRequest.toStaticResources().atCommonLocations(),
-//                                antMatcher("/auth/**")
-//                                antMatcher("/world"),
-//                                antMatcher("/now"),
-//                                antMatcher("/users"),
-//                                antMatcher("/home"),
-//                                antMatcher("/**")
-//                                antMatcher("/login"),
-//                                antMatcher("/inventory/**")
-//                        ).permitAll().anyRequest().authenticated()
-//                ).formLogin(form ->
-//                        form.loginPage("/auth/login").permitAll()
-//                ).logout(logout ->
-//                        logout.permitAll()
-//                ).csrf(csrf ->
-//                        csrf.ignoringRequestMatchers(
-//                                antMatcher("/h2-console/**"),
-//                                antMatcher("/auth/**")
-//                        ).csrfTokenRepository(new CookieCsrfTokenRepository())
-//                );
         return http.build();
     }
 
@@ -118,9 +85,7 @@ public class SecurityConfig {
     ) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
-//    //TODO UserDetailsService and PasswordEncoder in the AuthenticationManager
-//    //TODO WebSecurityConfigurationController
-//
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
